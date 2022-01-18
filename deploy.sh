@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION=1.0.0
+VERSION=1.0.1
 URL=https://github.com/nguyencatpham/bms-deployment/archive/refs/tags/v$VERSION.tar.gz
 BASE_DIR=/tmp/bms-deployment/bms-deployment-$VERSION
 
