@@ -2,7 +2,7 @@ version: "3.3"
 services:
   bms-frontend:
     container_name: bms-frontend
-    image: nguyencatpham/bms-frontend:v0.1.1
+    image: nguyencatpham/bms-frontend:v0.1.2
     stop_signal: SIGINT
     restart: always
     ports:
