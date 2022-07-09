@@ -38,6 +38,7 @@ services:
     restart: always
     ports:
       - "3000:3000"
+      - "9000:3000"
       - "1883:1883"
       - "8883:8883"
     env_file:

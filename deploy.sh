@@ -1,6 +1,6 @@
 #!/bin/bash
 ARG=$1
-VERSION=1.0.1
+VERSION=1.0.4
 if [[ -z "${ARG}" ]]; then
 	echo "Using default version ${VERSION} for deployment"
 else
