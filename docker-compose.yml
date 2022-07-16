@@ -46,6 +46,8 @@ services:
     restart: always
     ports:
       - "8080:80"
+      - "80:80"
+      - "443:80"
     environment:
       REACT_APP_API_URL: http://115.78.229.105:9000/api
       REACT_APP_DATABASEURL: http://115.78.229.105:9000/api
