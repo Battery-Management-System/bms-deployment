@@ -69,3 +69,6 @@ Thumbs.db
 *.wmv
 frontend
 build
+volume/mysql/data/
+volume/timescale/data/
+volume/uptime/data

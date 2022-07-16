@@ -6,6 +6,10 @@ if [[ -z "${ARG}" ]]; then
 else
 	VERSION=$ARG
 fi
+mkdir -p ./volume/mysql/data
+mkdir -p ./volume/timescale/data
+mkdir -p ./volume/uptime/data
+
 URL=https://github.com/nguyencatpham/bms-deployment/archive/refs/tags/v$VERSION.tar.gz
 BASE_DIR=/tmp/bms-deployment/bms-deployment-$VERSION
 

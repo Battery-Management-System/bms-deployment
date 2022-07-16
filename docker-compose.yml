@@ -47,9 +47,9 @@ services:
     ports:
       - "8080:80"
     environment:
-      REACT_APP_API_URL: http://115.78.229.105:3000
-      REACT_APP_DATABASEURL: http://115.78.229.105:3000
-      REACT_APP_ALERT_RANGE: 10
+      REACT_APP_API_URL: http://115.78.229.105:9000/api
+      REACT_APP_DATABASEURL: http://115.78.229.105:9000/api
+      REACT_APP_DEFAULTAUTH: jwt
     depends_on:
       - bms-backend
       - bms-mysql
@@ -110,10 +110,8 @@ services:
       restart: always
       ports:
           - "8088:3001"
-      networks:
-          - my_network
       volumes:
-          - ./uptime:/app/data
+          - ./volume/uptime/data:/app/data
       logging:
         options:
           max-size: '30m'
