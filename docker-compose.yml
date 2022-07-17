@@ -39,28 +39,6 @@ services:
       options:
         max-size: '30m'
         max-file: '5'
-  bms-frontend:
-    image: nguyencatpham/bms-frontend:v0.2.0
-    container_name: bms-frontend
-    stop_signal: SIGINT
-    restart: always
-    ports:
-      - "8080:80"
-      - "80:80"
-      - "443:80"
-    environment:
-      REACT_APP_API_URL: http://115.78.229.105:9000/api
-      REACT_APP_DATABASEURL: http://115.78.229.105:9000/api
-      REACT_APP_DEFAULTAUTH: jwt
-    depends_on:
-      - bms-backend
-      - bms-mysql
-      - bms-timescale
-      - bms-broker-redis
-    logging:
-      options:
-        max-size: '30m'
-        max-file: '5'
     # volumes:
     #   - .:/opt/bms-frontend
   bms-backend-migration:
@@ -101,6 +79,48 @@ services:
     # volumes:
     #   - .:/opt/bms-backend
     #   - /opt/bms-backend/node_modules
+    logging:
+      options:
+        max-size: '30m'
+        max-file: '5'
+  bms-frontend:
+    image: nguyencatpham/bms-frontend:v0.2.0
+    container_name: bms-frontend
+    stop_signal: SIGINT
+    restart: always
+    ports:
+      - "8080:80"
+      - "80:80"
+      - "443:80"
+    environment:
+      REACT_APP_API_URL: http://115.78.229.105:9000/api
+      REACT_APP_DATABASEURL: http://115.78.229.105:9000/api
+      REACT_APP_DEFAULTAUTH: jwt
+    depends_on:
+      - bms-backend
+      - bms-mysql
+      - bms-timescale
+      - bms-broker-redis
+    logging:
+      options:
+        max-size: '30m'
+        max-file: '5'
+  bms-frontend-old:
+    image: nguyencatpham/bms-frontend:v0.1.2
+    container_name: bms-frontend-old
+    stop_signal: SIGINT
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      REACT_APP_API_URL: http://115.78.229.105:9000/api
+      REACT_APP_DATABASEURL: http://115.78.229.105:9000/api
+      REACT_APP_DEFAULTAUTH: jwt
+    depends_on:
+      - bms-backend
+      - bms-mysql
+      - bms-timescale
+      - bms-broker-redis
     logging:
       options:
         max-size: '30m'
