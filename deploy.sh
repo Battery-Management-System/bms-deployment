@@ -18,6 +18,9 @@ echo "URL: ${URL}"
 
 curl -Ls $URL | tar xvz -C /tmp
 
+echo "Sleep 10 seconds"
+sleep 10
+
 mv /tmp/"bms-deployment-${VERSION}/*" $BASE_DIR
 
 cd $BASE_DIR && ./install.sh
