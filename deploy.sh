@@ -6,13 +6,15 @@ if [[ -z "${ARG}" ]]; then
 else
 	VERSION=$ARG
 fi
-mkdir -p ./volume/mysql/data
-mkdir -p ./volume/timescale/data
-mkdir -p ./volume/uptime/data
-mkdir -p ./bms-deployment
+
+HOME=$HOME/bms
+mkdir -p $HOME/volume/mysql/data
+mkdir -p $HOME/volume/timescale/data
+mkdir -p $HOME/volume/uptime/data
+mkdir -p $HOME/bms-deployment
 
 URL=https://github.com/Battery-Management-System/bms-deployment/archive/refs/tags/v$VERSION.tar.gz
-BASE_DIR=./bms-deployment
+BASE_DIR=$HOME/bms-deployment
 
 echo "URL: ${URL}"
 
