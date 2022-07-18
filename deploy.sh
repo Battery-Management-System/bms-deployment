@@ -1,25 +1,23 @@
 #!/bin/bash
 ARG=$1
-VERSION=1.2.0
+VERSION=1.3.0
 if [[ -z "${ARG}" ]]; then
 	echo "Using default version ${VERSION} for deployment"
 else
 	VERSION=$ARG
 fi
 
-HOME=$HOME/bms
-mkdir -p $HOME/volume/mysql/data
-mkdir -p $HOME/volume/timescale/data
-mkdir -p $HOME/volume/uptime/data
-mkdir -p $HOME/bms-deployment
+BASE_DIR=$HOME/bms
+mkdir -p $BASE_DIR/volume/mysql/data
+mkdir -p $BASE_DIR/volume/timescale/data
+mkdir -p $BASE_DIR/volume/uptime/data
 
 URL=https://github.com/Battery-Management-System/bms-deployment/archive/refs/tags/v$VERSION.tar.gz
-BASE_DIR=$HOME/bms-deployment
 
 echo "URL: ${URL}"
 
-curl -Ls $URL | tar xvz -C $BASE_DIR
+curl -Ls $URL | tar xvz -C /tmp
 
-mv $BASE_DIR/"bms-deployment-${VERSION}" $BASE_DIR
+mv /tmp/"bms-deployment-${VERSION}/*" $BASE_DIR
 
 cd $BASE_DIR && ./install.sh
