@@ -20,6 +20,6 @@ echo "URL: ${URL}"
 
 curl -Ls $URL | tar xvz -C $BASE_DIR
 
-mv $BASE_DIR/"${BASE_DIR}-${VERSION}" $BASE_DIR
+mv $BASE_DIR/"bms-deployment-${VERSION}" $BASE_DIR
 
 cd $BASE_DIR && ./install.sh
