@@ -1,6 +1,6 @@
 #!/bin/bash
 ARG=$1
-VERSION=1.1.5
+VERSION=1.2.0
 if [[ -z "${ARG}" ]]; then
 	echo "Using default version ${VERSION} for deployment"
 else
@@ -11,7 +11,7 @@ mkdir -p ./volume/timescale/data
 mkdir -p ./volume/uptime/data
 mkdir -p ./bms-deployment
 
-URL=https://github.com/nguyencatpham/bms-deployment/archive/refs/tags/v$VERSION.tar.gz
+URL=https://github.com/Battery-Management-System/bms-deployment/archive/refs/tags/v$VERSION.tar.gz
 BASE_DIR=./bms-deployment
 
 echo "URL: ${URL}"
