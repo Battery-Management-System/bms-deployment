@@ -84,7 +84,7 @@ services:
         max-size: '30m'
         max-file: '5'
   bms-frontend:
-    image: nguyencatpham/bms-frontend:v0.2.1
+    image: nguyencatpham/bms-frontend:v0.2.2
     container_name: bms-frontend
     stop_signal: SIGINT
     restart: always
