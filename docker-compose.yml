@@ -1,140 +1,146 @@
 version: "3.3"
 services:
-  bms-mysql:
-    image: mysql:8.0.16
-    container_name: bms-mysql
-    restart: always
-    env_file:
-      - test-infrastructure.env
-    ports:
-      - "3306:3306"
-    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci', '--default-authentication-plugin=mysql_native_password']
-    volumes:
-    - ./volume/mysql/data:/var/lib/mysql
-    logging:
-      options:
-        max-size: '300m'
-        max-file: '5'
-  bms-timescale:
-    image: timescale/timescaledb:1.7.4-pg12
-    container_name: bms-timescale
-    restart: always
-    ports:
-      - "5432:5432"
-    env_file:
-      - test-infrastructure.env
-    volumes:
-    - ./volume/timescale/data:/var/lib/postgresql/data/ 
-    logging:
-      options:
-        max-size: '300m'
-        max-file: '5'
-  
-  bms-broker-redis:
-    image: "redis:6.2-rc-buster"
-    container_name: bms-broker-redis
-    restart: always
-    command: redis-server
-    logging:
-      options:
-        max-size: '30m'
-        max-file: '5'
-    # volumes:
-    #   - .:/opt/bms-frontend
-  bms-backend-migration:
-    container_name: bms-backend-migration
-    image: nguyencatpham/bms-backend:v0.1.0
-    restart: on-failure
-    command: node bin/autoupdate.js
-    stop_signal: SIGINT
-    env_file:
-      - test-infrastructure.env
-      - test-program.env
-    depends_on:
-      - bms-backend
-      - bms-mysql
-      - bms-timescale
-      - bms-broker-redis
-    logging:
-      options:
-        max-size: '30m'
-        max-file: '5'
-  bms-backend:
-    container_name: bms-backend
-    image: nguyencatpham/bms-backend:v0.1.0
-    stop_signal: SIGINT
-    restart: always
-    ports:
-      - "3000:3000"
-      - "9000:3000"
-      - "1883:1883"
-      - "8883:8883"
-    env_file:
-      - test-infrastructure.env
-      - test-program.env
-    depends_on:
-      - bms-mysql
-      - bms-timescale
-      - bms-broker-redis
-    # volumes:
-    #   - .:/opt/bms-backend
-    #   - /opt/bms-backend/node_modules
-    logging:
-      options:
-        max-size: '30m'
-        max-file: '5'
-  bms-frontend:
-    image: binhsonbms/bms-frontend:v0.2.2
-    container_name: bms-frontend
-    stop_signal: SIGINT
-    restart: always
-    ports:
-      - "8080:80"
-      - "80:80"
-      - "443:80"
-    environment:
-      REACT_APP_API_URL: http://115.78.229.105:9000/api
-      REACT_APP_DATABASEURL: http://115.78.229.105:9000/api
-      REACT_APP_DEFAULTAUTH: jwt
-    depends_on:
-      - bms-backend
-      - bms-mysql
-      - bms-timescale
-      - bms-broker-redis
-    logging:
-      options:
-        max-size: '30m'
-        max-file: '5'
-  bms-frontend-old:
-    image: nguyencatpham/bms-frontend:v0.1.2
-    container_name: bms-frontend-old
-    stop_signal: SIGINT
-    restart: always
-    ports:
-      - "8081:80"
-    environment:
-      REACT_APP_API_URL: http://115.78.229.105:9000/api
-      REACT_APP_DATABASEURL: http://115.78.229.105:9000/api
-      REACT_APP_DEFAULTAUTH: jwt
-    depends_on:
-      - bms-backend
-      - bms-mysql
-      - bms-timescale
-      - bms-broker-redis
-    logging:
-      options:
-        max-size: '30m'
-        max-file: '5'
+    bms-mysql:
+        image: mysql:8.0.16
+        container_name: bms-mysql
+        restart: always
+        env_file:
+            - test-infrastructure.env
+        ports:
+            - "3306:3306"
+        command:
+            [
+                "mysqld",
+                "--character-set-server=utf8mb4",
+                "--collation-server=utf8mb4_unicode_ci",
+                "--default-authentication-plugin=mysql_native_password",
+            ]
+        volumes:
+            - ./volume/mysql/data:/var/lib/mysql
+        logging:
+            options:
+                max-size: "300m"
+                max-file: "5"
+    bms-timescale:
+        image: timescale/timescaledb:1.7.4-pg12
+        container_name: bms-timescale
+        restart: always
+        ports:
+            - "5432:5432"
+        env_file:
+            - test-infrastructure.env
+        volumes:
+            - ./volume/timescale/data:/var/lib/postgresql/data/
+        logging:
+            options:
+                max-size: "300m"
+                max-file: "5"
 
-  uptime:
-      image: "louislam/uptime-kuma:1"
-      container_name: uptime
-      restart: always
-      ports:
-          - "8088:3001"
-      volumes:
-          - ./volume/uptime/data:/app/data
-      logging:
-        options:
-          max-size: '30m'
-          max-file: '5'
+    bms-broker-redis:
+        image: "redis:6.2-rc-buster"
+        container_name: bms-broker-redis
+        restart: always
+        command: redis-server
+        logging:
+            options:
+                max-size: "30m"
+                max-file: "5"
+        # volumes:
+        #   - .:/opt/bms-frontend
+    bms-backend-migration:
+        container_name: bms-backend-migration
+        image: nguyencatpham/bms-backend:v0.1.0
+        restart: on-failure
+        command: node bin/autoupdate.js
+        stop_signal: SIGINT
+        env_file:
+            - test-infrastructure.env
+            - test-program.env
+        depends_on:
+            - bms-backend
+            - bms-mysql
+            - bms-timescale
+            - bms-broker-redis
+        logging:
+            options:
+                max-size: "30m"
+                max-file: "5"
+    bms-backend:
+        container_name: bms-backend
+        image: nguyencatpham/bms-backend:v0.1.0
+        stop_signal: SIGINT
+        restart: always
+        ports:
+            - "3000:3000"
+            - "9000:3000"
+            - "1883:1883"
+            - "8883:8883"
+        env_file:
+            - test-infrastructure.env
+            - test-program.env
+        depends_on:
+            - bms-mysql
+            - bms-timescale
+            - bms-broker-redis
+        # volumes:
+        #   - .:/opt/bms-backend
+        #   - /opt/bms-backend/node_modules
+        logging:
+            options:
+                max-size: "30m"
+                max-file: "5"
+    bms-frontend:
+        image: binhsonbms/bms-frontend:v0.2.3
+        container_name: bms-frontend
+        stop_signal: SIGINT
+        restart: always
+        ports:
+            - "8080:80"
+            - "80:80"
+            - "443:80"
+        environment:
+            REACT_APP_API_URL: http://115.78.229.105:9000/api
+            REACT_APP_DATABASEURL: http://115.78.229.105:9000/api
+            REACT_APP_DEFAULTAUTH: jwt
+        depends_on:
+            - bms-backend
+            - bms-mysql
+            - bms-timescale
+            - bms-broker-redis
+        logging:
+            options:
+                max-size: "30m"
+                max-file: "5"
+    bms-frontend-old:
+        image: nguyencatpham/bms-frontend:v0.1.2
+        container_name: bms-frontend-old
+        stop_signal: SIGINT
+        restart: always
+        ports:
+            - "8081:80"
+        environment:
+            REACT_APP_API_URL: http://115.78.229.105:9000/api
+            REACT_APP_DATABASEURL: http://115.78.229.105:9000/api
+            REACT_APP_DEFAULTAUTH: jwt
+        depends_on:
+            - bms-backend
+            - bms-mysql
+            - bms-timescale
+            - bms-broker-redis
+        logging:
+            options:
+                max-size: "30m"
+                max-file: "5"
+
+    uptime:
+        image: "louislam/uptime-kuma:1"
+        container_name: uptime
+        restart: always
+        ports:
+            - "8088:3001"
+        volumes:
+            - ./volume/uptime/data:/app/data
+        logging:
+            options:
+                max-size: "30m"
+                max-file: "5"
