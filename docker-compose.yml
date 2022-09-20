@@ -49,7 +49,7 @@ services:
         #   - .:/opt/bms-frontend
     bms-backend-migration:
         container_name: bms-backend-migration
-        image: nguyencatpham/bms-backend:v0.1.0
+        image: nguyencatpham/bms-backend:v0.1.1
         restart: on-failure
         command: node bin/autoupdate.js
         stop_signal: SIGINT
@@ -67,7 +67,7 @@ services:
                 max-file: "5"
     bms-backend:
         container_name: bms-backend
-        image: nguyencatpham/bms-backend:v0.1.0
+        image: nguyencatpham/bms-backend:v0.1.1
         stop_signal: SIGINT
         restart: always
         ports:
